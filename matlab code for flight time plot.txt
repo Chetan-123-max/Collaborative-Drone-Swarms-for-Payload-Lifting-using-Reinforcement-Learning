@@ -1,0 +1,32 @@
+clc;clear all;close all;
+
+P = 170; %W/kg  Power required to lift 1kg in air
+V = 36;  %Voltage of battery
+
+AUW = [2.5:0.5:25]; %kg Entire weight of drone
+
+capacity = 8.8; % Ampere hours of battery
+discharge = 0.8; %keep kixed
+AAD = AUW .* (P ./ V);
+
+time = (capacity * discharge * 60) ./ AAD; %min
+
+plot(AUW,time,'LineWidth',3);
+
+hold on 
+grid on
+P2 = 120;
+AUW2 = AUW ./ 3;
+AAD2 = AUW2 .* (P2 ./ V);
+time2 = (capacity * discharge * 60) ./ AAD2; %min
+scatter(AUW,time2,30,'filled')
+
+AUW3 = AUW ./ 4;
+AAD3 = AUW3 .* (P2 ./ V);
+time3 = (capacity * discharge * 60) ./ AAD3; %min
+scatter(AUW,time3,30,'filled')
+set(gca,'color',[.95 .95 .95])
+xlabel('Payload Weight (kg)') 
+ylabel('Flight Time (min)')
+set(gca,'fontsize',17);
+legend('Single Drone','3 Drone Swarm','4 Drone Swarm');
